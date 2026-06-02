@@ -1,0 +1,309 @@
+/* 🎨 Style du Briefing Quotidien */
+:root {
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --bg-hover: #334155;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --primary: #6366f1;
+    --primary-glow: rgba(99, 102, 241, 0.15);
+    --accent: #22d3ee;
+    --border: #334155;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.site-header {
+    text-align: center;
+    padding: 40px 0 30px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 30px;
+}
+
+.site-title {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.site-desc {
+    color: var(--text-muted);
+    margin-top: 8px;
+    font-size: 0.95rem;
+}
+
+.site-nav {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.nav-link {
+    padding: 8px 20px;
+    border-radius: 8px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: var(--bg-card);
+    color: var(--text);
+}
+
+/* Briefing meta */
+.briefing-meta {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.briefing-date {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.article-count {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Briefing content */
+.briefing-content {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 30px;
+    border: 1px solid var(--border);
+}
+
+.briefing-content h2 {
+    color: var(--primary);
+    font-size: 1.2rem;
+    margin: 25px 0 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary-glow);
+}
+
+.briefing-content h2:first-child {
+    margin-top: 0;
+}
+
+.briefing-content h3 {
+    color: var(--accent);
+    font-size: 1.05rem;
+    margin: 18px 0 8px;
+}
+
+.briefing-content p {
+    margin: 10px 0;
+    color: var(--text);
+}
+
+.briefing-content a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.briefing-content a:hover {
+    border-bottom-color: var(--primary);
+}
+
+.briefing-content ul, .briefing-content ol {
+    margin: 10px 0;
+    padding-left: 24px;
+}
+
+.briefing-content li {
+    margin: 8px 0;
+}
+
+.briefing-content blockquote {
+    border-left: 3px solid var(--primary);
+    padding: 10px 15px;
+    margin: 15px 0;
+    background: var(--bg);
+    border-radius: 0 8px 8px 0;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.briefing-content hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 25px 0;
+}
+
+.briefing-content .highlight {
+    background: var(--primary-glow);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* Article cards in AI output */
+.briefing-content .article-card {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s;
+}
+
+.briefing-content .article-card:hover {
+    border-color: var(--primary);
+}
+
+.briefing-content .article-title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.briefing-content .article-summary {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+
+.briefing-content .category-title {
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin: 30px 0 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.briefing-content .category-title::before {
+    content: '▸';
+    color: var(--accent);
+}
+
+/* En Bref section */
+.briefing-content .en-bref {
+    background: linear-gradient(135deg, var(--primary-glow), transparent);
+    border: 1px solid var(--primary);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 30px 0 0;
+}
+
+.briefing-content .en-bref h3 {
+    color: var(--primary);
+    margin-top: 0;
+}
+
+/* Introduction */
+.briefing-content .intro {
+    font-size: 1.05rem;
+    color: var(--accent);
+    border-left: 3px solid var(--accent);
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    background: var(--bg);
+    border-radius: 0 8px 8px 0;
+}
+
+/* Footer */
+.site-footer {
+    text-align: center;
+    padding: 30px 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    margin-top: 30px;
+}
+
+.site-footer a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+/* Archives page */
+.archives-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.archive-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    transition: all 0.2s;
+}
+
+.archive-card:hover {
+    border-color: var(--primary);
+    background: var(--bg-hover);
+}
+
+.archive-date {
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.archive-link {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 4px;
+    display: block;
+}
+
+.archive-link:hover {
+    color: var(--primary);
+}
+
+.archive-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.empty-archive {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 60px 20px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .site-title { font-size: 1.5rem; }
+    .briefing-content { padding: 20px; }
+    .container { padding: 15px; }
+}

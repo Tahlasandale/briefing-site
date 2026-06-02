@@ -1,0 +1,69 @@
+# 📡 Configuration du Briefing Quotidien
+# Générateur de site statique avec résumé IA
+
+title: "Le Briefing du Matin"
+description: "Votre revue de presse quotidienne, générée par IA"
+lang: "fr"
+timezone: "Europe/Paris"
+
+# 🌤️ Météo (Open-Meteo gratuit, pas de clé requise)
+weather:
+  enabled: true
+  lat: 48.8566
+  lon: 2.3522
+
+# 🤖 IA de résumé (Mistral)
+ai:
+  provider: mistral
+  model: mistral-small-latest
+  temperature: 0.3
+  max_tokens: 4096
+
+# 📰 Flux RSS
+rss_feeds:
+  - name: "Évangile du jour"
+    url: "https://rss.evangelizo.org/rss/v2/evangelizo_rss-trf.xml"
+    category: "Spirituel"
+    max_items: 3
+
+  - name: "Blog du Modérateur"
+    url: "https://www.blogdumoderateur.com/feed/"
+    category: "Tech & Web"
+    max_items: 5
+
+  - name: "FrAndroid"
+    url: "https://www.frandroid.com/feed"
+    category: "Tech & Web"
+    max_items: 5
+
+  - name: "Korben"
+    url: "https://korben.info/feed"
+    category: "Tech & Web"
+    max_items: 5
+
+  - name: "ActuIA"
+    url: "https://www.actuia.com/feed"
+    category: "Intelligence Artificielle"
+    max_items: 5
+
+  - name: "Developpez.com"
+    url: "http://www.developpez.com/index/rss"
+    category: "Développement"
+    max_items: 5
+
+  - name: "StackGuide"
+    url: "https://www.stackgui.de/rss.xml"
+    category: "Développement"
+    max_items: 5
+
+  - name: "LDTR"
+    url: "https://ldtr.ovh/index.xml"
+    category: "Tech & Web"
+    max_items: 5
+
+# 🎨 Apparence du site
+theme:
+  primary_color: "#6366f1"
+  background: "#0f172a"
+  text: "#e2e8f0"
+  accent: "#22d3ee"

@@ -15,42 +15,26 @@ if [ ! -f "$SITE_DIR/index.html" ]; then
     exit 1
 fi
 
-# Si le dépôt n'existe pas encore localement, le cloner
-if [ ! -d ".git" ]; then
-    echo "🆕 Initialisation du dépôt git..."
-    git init
-    git remote add origin "$REPO_URL"
-    git checkout -b main
-    git add -A
-    git commit -m "Initialisation du Briefing Quotidien"
-    git push -u origin main
-fi
-
-# Déploiement via git subtree ou gh-pages
-# On utilise la méthode simple: copier site/ dans un répertoire temporaire
 echo "📦 Préparation du déploiement..."
 TEMP_DIR=$(mktemp -d)
 
-# Copier le contenu du site
+# Copier le contenu du site dans un dossier temporaire
 cp -r "$SITE_DIR"/* "$TEMP_DIR/"
 cp "$SITE_DIR/style.css" "$TEMP_DIR/" 2>/dev/null || true
 
-# Aller dans le répertoire temp, initialiser git et pusher sur gh-pages
+# S'assurer qu'il y a un .nojekyll pour GitHub Pages
+touch "$TEMP_DIR/.nojekyll"
+
+# Initialiser git dans le dossier temporaire et pusher
 cd "$TEMP_DIR"
 
-git init
-git checkout -b "$BRANCH"
+git init -q
+git checkout -b "$BRANCH" -q
 git add -A
-git commit -m "Briefing du $(date +%Y-%m-%d)" --allow-empty
+git commit -m "Briefing du $(date +%Y-%m-%d)" --allow-empty -q
 
-# Pousser
 echo "☁️ Push sur GitHub ($BRANCH)..."
-git push -f "$REPO_URL" "$BRANCH" 2>&1 || {
-    echo "⚠️  Erreur de push. Vérifie que le repo Tahlasandale/briefing-site existe."
-    echo "   Crée-le sur https://github.com/new"
-    rm -rf "$TEMP_DIR"
-    exit 1
-}
+git push -f "$REPO_URL" "$BRANCH" 2>&1
 
 # Nettoyage
 rm -rf "$TEMP_DIR"
@@ -58,5 +42,4 @@ rm -rf "$TEMP_DIR"
 echo "✅ Site déployé sur GitHub Pages !"
 echo "🌐 https://tahlasandale.github.io/briefing-site"
 
-# Revenir au répertoire d'origine
 cd - > /dev/null

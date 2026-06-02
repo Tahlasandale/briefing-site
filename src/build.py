@@ -1,14 +1,37 @@
 #!/usr/bin/env python3
 """
-🏗️ build.py — Génération du site statique
+🏗️ build.py — Génération du site statique (thème papier vieilli)
 Prend les résumés IA et construit les pages HTML.
 """
 
 import json
 import os
+import re
 import shutil
 import yaml
 from datetime import datetime
+
+
+EMOJI_PATTERN = re.compile(
+    "["
+    "\U0001F600-\U0001F64F"  # Emoticônes
+    "\U0001F300-\U0001F5FF"  # Symboles & pictogrammes
+    "\U0001F680-\U0001F6FF"  # Transport & symboles
+    "\U0001F1E0-\U0001F1FF"  # Drapeaux
+    "\U00002702-\U000027B0"  # Divers symboles
+    "\U000024C2-\U0001F251"  # Suppl. enclosed
+    "\U0001F900-\U0001F9FF"  # Suppl. symbols & pictos
+    "\U0001FA00-\U0001FA6F"  # Chess symbols
+    "\U0001FA70-\U0001FAFF"  # Symbols extended-A
+    "\U00002600-\U000026FF"  # Misc symbols
+    "\U0000FE00-\U0000FE0F"  # Variation selectors
+    "\U000020D0-\U000020FF"  # Combining marks
+    "]+", flags=re.UNICODE)
+
+
+def strip_emojis(text):
+    """Supprime tous les emojis du texte pour garder un style sobre."""
+    return EMOJI_PATTERN.sub('', text).strip()
 
 
 HTML_TEMPLATE = """<!DOCTYPE html>
@@ -18,23 +41,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} — {date}</title>
     <meta name="description" content="{description}">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="{root}style.css">
 </head>
 <body>
     <div class="container">
         <header class="site-header">
+            <span class="masthead">{title}</span>
             <h1 class="site-title">{title}</h1>
             <p class="site-desc">{description}</p>
             <nav class="site-nav">
-                <a href="/" class="nav-link">Aujourd'hui</a>
-                <a href="/archives/" class="nav-link">Archives</a>
+                <a href="{root}" class="nav-link">Aujourd'hui</a>
+                <a href="{root}archives/" class="nav-link">Archives</a>
             </nav>
         </header>
 
         <main class="daily-briefing">
             <div class="briefing-meta">
                 <time class="briefing-date" datetime="{iso_date}">{date}</time>
-                <span class="article-count">{count} articles • {feeds} flux</span>
+                <span class="article-count">{count} articles &bull; {feeds} flux</span>
             </div>
 
             <div class="briefing-content">
@@ -43,13 +67,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </main>
 
         <footer class="site-footer">
-            <p>Généré automatiquement le {gen_date} • Briefing Quotidien</p>
-            <p><a href="/archives/">Consulter les archives</a></p>
+            <p>Genere automatiquement le {gen_date} &bull; Briefing Quotidien</p>
+            <p><a href="{root}archives/">Consulter les archives</a></p>
         </footer>
     </div>
 </body>
 </html>"""
-
 
 ARCHIVE_TEMPLATE = """<!DOCTYPE html>
 <html lang="{lang}">
@@ -57,34 +80,79 @@ ARCHIVE_TEMPLATE = """<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archives — {title}</title>
-    <link rel="stylesheet" href="/style.css">
+    <meta name="description" content="{description}">
+    <link rel="stylesheet" href="{root}style.css">
 </head>
 <body>
     <div class="container">
         <header class="site-header">
-            <h1 class="site-title">📚 Archives</h1>
-            <p class="site-desc">Tous les briefings quotidiens depuis le début</p>
+            <span class="masthead">{title}</span>
+            <h1 class="site-title">{title}</h1>
+            <p class="site-desc">{description}</p>
             <nav class="site-nav">
-                <a href="/" class="nav-link">Aujourd'hui</a>
-                <a href="/archives/" class="nav-link active">Archives</a>
+                <a href="{root}" class="nav-link">Aujourd'hui</a>
+                <a href="{root}archives/" class="nav-link">Archives</a>
             </nav>
         </header>
 
-        <main class="archives-list">
-            {entries}
+        <main class="daily-briefing">
+            <div class="briefing-meta">
+                <time class="briefing-date" datetime="{iso_date}">{date}</time>
+                <span class="article-count">{count} articles &bull; {feeds} flux</span>
+            </div>
+
+            <div class="briefing-content">
+{ai_content}
+            </div>
         </main>
 
         <footer class="site-footer">
-            <p>Briefing Quotidien</p>
+            <p>Genere automatiquement le {gen_date} &bull; Briefing Quotidien</p>
+            <p><a href="{root}archives/">Consulter les archives</a></p>
         </footer>
     </div>
 </body>
 </html>"""
 
+ARCHIVE_PAGE_TEMPLATE = """<!DOCTYPE html>
+<html lang="{lang}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archives — {title}</title>
+    <meta name="description" content="{description}">
+    <link rel="stylesheet" href="{root}style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <span class="masthead">{title}</span>
+            <h1 class="site-title">{title}</h1>
+            <p class="site-desc">Archives — {description}</p>
+            <nav class="site-nav">
+                <a href="{root}" class="nav-link">Aujourd'hui</a>
+                <a href="{root}archives/" class="nav-link active">Archives</a>
+            </nav>
+        </header>
+
+        <main class="daily-briefing">
+            <div class="briefing-content">
+            <div class="archives-list">
+                {entries}
+            </div>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <p>Briefing Quotidien — <a href="{root}">Accueil</a></p>
+        </footer>
+    </div>
+</body>
+</html>"""
 
 INDEX_CARD = """            <article class="archive-card">
-                <time class="archive-date" datetime="{iso_date}">{date}</time>
-                <h2><a href="/{link}" class="archive-link">{title}</a></h2>
+                <time class="archive-date" datetime=\"{iso_date}\">{date}</time>
+                <a href=\"{link}\" class="archive-link">{title}</a>
                 <p class="archive-desc">{count} articles</p>
             </article>"""
 
@@ -108,7 +176,7 @@ def build_site():
     now = datetime.now()
     date_str = date_fr()
     iso_date = now.strftime("%Y-%m-%d")
-    slug = iso_date  # ex: 2026-06-02
+    slug = iso_date
 
     # Charger le contenu généré par l'IA
     ai_content_path = "/tmp/briefing_ai_content.html"
@@ -118,6 +186,10 @@ def build_site():
 
     with open(ai_content_path) as f:
         ai_content = f.read()
+
+    # Nettoyer les emojis du contenu IA (style papier sobre)
+    ai_content = strip_emojis(ai_content)
+    print(f"🧹 Emojis nettoyés du contenu IA")
 
     # Charger les stats RSS
     with open("/tmp/briefing_results.json") as f:
@@ -141,6 +213,7 @@ def build_site():
         count=total_items,
         feeds=total_feeds,
         gen_date=now.strftime("%Y-%m-%d %H:%M"),
+        root="",
     )
 
     with open("site/index.html", "w") as f:
@@ -149,10 +222,9 @@ def build_site():
 
     # Archiver le briefing du jour dans site/archives/YYYY-MM-DD.html
     archive_path = f"site/archives/{slug}.html"
-    # Copier l'index avec un en-tête "Archives" dans le titre
-    archive_html = HTML_TEMPLATE.format(
+    archive_html = ARCHIVE_TEMPLATE.format(
         lang=config.get("lang", "fr"),
-        title=f"📜 {config['title']}",
+        title=config["title"],
         description=config.get("description", ""),
         date=date_str,
         iso_date=iso_date,
@@ -160,6 +232,7 @@ def build_site():
         count=total_items,
         feeds=total_feeds,
         gen_date=now.strftime("%Y-%m-%d %H:%M"),
+        root="../",
     )
 
     with open(archive_path, "w") as f:
@@ -189,12 +262,11 @@ def build_archive_page(config):
                         "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
                 date_str = f"{jours[dt.weekday()]} {dt.day} {mois[dt.month-1]} {dt.year}"
 
-                # Titre par défaut
                 title = f"Briefing du {date_str}"
                 entries.append(INDEX_CARD.format(
                     iso_date=date_part,
                     date=date_str,
-                    link=f"archives/{fname}",
+                    link=f"{fname}",
                     title=title,
                     count="Briefing quotidien",
                 ))
@@ -204,10 +276,12 @@ def build_archive_page(config):
     if not entries:
         entries = ['<p class="empty-archive">Aucun briefing pour le moment.</p>']
 
-    archive_html = ARCHIVE_TEMPLATE.format(
+    archive_html = ARCHIVE_PAGE_TEMPLATE.format(
         lang=config.get("lang", "fr"),
         title=config["title"],
+        description=config.get("description", ""),
         entries="\n".join(entries),
+        root="../",
     )
 
     with open(f"{archives_dir}/index.html", "w") as f:

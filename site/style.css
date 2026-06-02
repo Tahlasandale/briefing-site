@@ -1,309 +1,402 @@
-/* 🎨 Style du Briefing Quotidien */
+/* ===== STYLE BRIEFING QUOTIDIEN - THÈME PAPIER VIEILLI ===== */
+/* Pallette : brun, roux, ivoire, comme un vieux journal */
+
+/* ===== POLICES ===== */
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* ===== PALETTE ===== */
 :root {
-    --bg: #0f172a;
-    --bg-card: #1e293b;
-    --bg-hover: #334155;
-    --text: #e2e8f0;
-    --text-muted: #94a3b8;
-    --primary: #6366f1;
-    --primary-glow: rgba(99, 102, 241, 0.15);
-    --accent: #22d3ee;
-    --border: #334155;
+    --paper:       #c8a97e;
+    --paper-dark:  #b8966a;
+    --paper-light: #d9be98;
+    --paper-crème: #e8d5b5;
+    --ink:         #1a1008;
+    --ink-faded:   #3d2b14;
+    --ink-light:   #5c4025;
+    --ink-ghost:   #7a5c3a;
+    --red-ink:     #7a1a0a;
+    --rule:        #8a6a3a;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* ===== GÉNÉRAL ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { background: #6b4e2a; }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    background-color: var(--paper);
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse 120px 80px at 15% 20%, rgba(100,60,10,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 80px 60px at 85% 70%, rgba(80,40,5,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 200px 150px at 50% 50%, rgba(180,130,70,0.05) 0%, transparent 80%);
+    color: var(--ink);
     min-height: 100vh;
+    padding: 0;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 860px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 2rem 1rem 4rem;
 }
 
-/* Header */
+/* ===== EN-TÊTE JOURNAL ===== */
 .site-header {
+    border-top: 4px double var(--ink);
+    border-bottom: 4px double var(--ink);
+    padding: 1.2rem 0;
     text-align: center;
-    padding: 40px 0 30px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 30px;
+    margin-bottom: 0;
+    position: relative;
 }
 
-.site-title {
-    font-size: 2rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.masthead {
+    font-family: 'Special Elite', serif;
+    font-size: clamp(1.6rem, 5vw, 2.8rem);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.4rem;
 }
+
+.site-title { display: none; }
 
 .site-desc {
-    color: var(--text-muted);
-    margin-top: 8px;
-    font-size: 0.95rem;
+    font-family: 'Courier Prime', monospace;
+    font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.3rem 0;
+    margin: 0.3rem auto;
+    max-width: 500px;
 }
 
 .site-nav {
-    margin-top: 20px;
+    margin-top: 0.6rem;
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 2rem;
 }
 
 .nav-link {
-    padding: 8px 20px;
-    border-radius: 8px;
-    color: var(--text-muted);
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
     text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.2s;
+    border-bottom: 1px solid var(--ink-ghost);
+    padding-bottom: 1px;
 }
 
-.nav-link:hover, .nav-link.active {
-    background: var(--bg-card);
-    color: var(--text);
+.nav-link:hover,
+.nav-link.active {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
 }
 
-/* Briefing meta */
+/* ===== LIGNE DE DATE ===== */
 .briefing-meta {
-    text-align: center;
-    margin-bottom: 30px;
-    padding: 20px;
-    background: var(--bg-card);
-    border-radius: 12px;
-    border: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--rule);
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
 }
 
 .briefing-date {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 6px;
+    font-family: 'Special Elite', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
 }
 
 .article-count {
-    font-size: 0.85rem;
-    color: var(--text-muted);
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-ghost);
+    text-transform: uppercase;
 }
 
-/* Briefing content */
-.briefing-content {
-    background: var(--bg-card);
-    border-radius: 12px;
-    padding: 30px;
-    border: 1px solid var(--border);
+/* ===== INTRO ===== */
+.briefing-header {
+    border-left: 3px solid var(--ink);
+    padding-left: 1rem;
+    margin-bottom: 2rem;
 }
 
-.briefing-content h2 {
-    color: var(--primary);
-    font-size: 1.2rem;
-    margin: 25px 0 15px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--primary-glow);
+.briefing-header::before {
+    content: '--- EDITION DU JOUR ---';
+    display: block;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ink-ghost);
+    margin-bottom: 0.5rem;
 }
 
-.briefing-content h2:first-child {
-    margin-top: 0;
+.briefing-header .subtitle,
+.briefing-matin .subtitle {
+    font-family: 'Special Elite', serif;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-ghost);
+    margin-bottom: 0.5rem;
 }
 
-.briefing-content h3 {
-    color: var(--accent);
-    font-size: 1.05rem;
-    margin: 18px 0 8px;
+.briefing-matin header::before {
+    content: '--- EDITION DU JOUR ---';
+    display: block;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ink-ghost);
+    margin-bottom: 0.5rem;
 }
 
-.briefing-content p {
-    margin: 10px 0;
-    color: var(--text);
-}
-
-.briefing-content a {
-    color: var(--primary);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
-}
-
-.briefing-content a:hover {
-    border-bottom-color: var(--primary);
-}
-
-.briefing-content ul, .briefing-content ol {
-    margin: 10px 0;
-    padding-left: 24px;
-}
-
-.briefing-content li {
-    margin: 8px 0;
-}
-
-.briefing-content blockquote {
-    border-left: 3px solid var(--primary);
-    padding: 10px 15px;
-    margin: 15px 0;
-    background: var(--bg);
-    border-radius: 0 8px 8px 0;
-    color: var(--text-muted);
+.intro {
+    font-family: 'Courier Prime', monospace;
+    font-size: clamp(0.75rem, 2vw, 0.88rem);
+    line-height: 1.8;
+    color: var(--ink-faded);
     font-style: italic;
 }
 
-.briefing-content hr {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 25px 0;
+/* ===== ZONE BRIEFING ===== */
+.briefing-content {
+    padding-left: 1.2rem;
+    position: relative;
 }
 
-.briefing-content .highlight {
-    background: var(--primary-glow);
-    padding: 2px 6px;
-    border-radius: 4px;
+/* Ligne de marge rouge */
+.briefing-content::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: repeating-linear-gradient(
+        to bottom,
+        var(--red-ink) 0px,
+        var(--red-ink) 8px,
+        transparent 8px,
+        transparent 14px
+    );
+    opacity: 0.5;
 }
 
-/* Article cards in AI output */
-.briefing-content .article-card {
-    background: var(--bg);
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px 0;
-    border: 1px solid var(--border);
-    transition: border-color 0.2s;
+/* Lignes d'impression */
+.daily-briefing {
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 27px,
+        rgba(90, 60, 20, 0.04) 27px,
+        rgba(90, 60, 20, 0.04) 28px
+    );
+    padding-top: 1rem;
 }
 
-.briefing-content .article-card:hover {
-    border-color: var(--primary);
+/* ===== CATÉGORIES ===== */
+.category {
+    margin-bottom: 2.5rem;
 }
 
-.briefing-content .article-title {
-    font-weight: 600;
-    font-size: 1rem;
+.category-title {
+    font-family: 'Special Elite', serif;
+    font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 0.3rem;
+    margin-bottom: 1.2rem;
 }
 
-.briefing-content .article-summary {
+/* ===== ARTICLES ===== */
+.article-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 0.7rem 0;
+    border-bottom: 1px dashed var(--rule);
+    position: relative;
+}
+
+.article-card::before {
+    content: '\00BB';
+    position: absolute;
+    left: -1.1rem;
+    top: 0.75rem;
+    font-family: 'Courier Prime', monospace;
+    color: var(--ink-ghost);
     font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-top: 5px;
 }
 
-.briefing-content .category-title {
-    font-size: 1.3rem;
-    color: var(--primary);
-    margin: 30px 0 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.article-title {
+    font-family: 'Special Elite', serif;
+    font-size: clamp(0.82rem, 2.2vw, 0.97rem);
+    line-height: 1.45;
+    color: var(--ink);
+    text-decoration: none;
+    display: block;
+    letter-spacing: 0.02em;
 }
 
-.briefing-content .category-title::before {
-    content: '▸';
-    color: var(--accent);
+.article-title:hover {
+    color: var(--red-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-style: dotted;
 }
 
-/* En Bref section */
-.briefing-content .en-bref {
-    background: linear-gradient(135deg, var(--primary-glow), transparent);
-    border: 1px solid var(--primary);
-    border-radius: 12px;
-    padding: 20px;
-    margin: 30px 0 0;
+.article-summary {
+    font-family: 'Courier Prime', monospace;
+    font-size: clamp(0.68rem, 1.8vw, 0.78rem);
+    line-height: 1.75;
+    color: var(--ink-faded);
+    margin-top: 0.35rem;
+    padding-left: 0.5rem;
+    border-left: 2px solid var(--paper-dark);
 }
 
-.briefing-content .en-bref h3 {
-    color: var(--primary);
-    margin-top: 0;
+/* Imperfections machine à écrire */
+.article-card:nth-child(3n+1) .article-title { transform: rotate(-0.15deg); }
+.article-card:nth-child(3n+2) .article-title { transform: rotate(0.1deg); }
+.article-card:nth-child(5n) .article-summary { opacity: 0.88; }
+.article-card:nth-child(even) .article-title { letter-spacing: 0.03em; }
+
+/* ===== EN BREF ===== */
+.en-bref {
+    border-left: 3px solid var(--red-ink);
+    padding: 1rem 1rem 1rem 1.5rem;
+    margin: 2rem 0 0;
+    background: rgba(122, 26, 10, 0.04);
+    font-style: italic;
 }
 
-/* Introduction */
-.briefing-content .intro {
-    font-size: 1.05rem;
-    color: var(--accent);
-    border-left: 3px solid var(--accent);
-    padding: 10px 15px;
-    margin-bottom: 20px;
-    background: var(--bg);
-    border-radius: 0 8px 8px 0;
+.en-bref h3 {
+    font-family: 'Special Elite', serif;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--red-ink);
+    margin-bottom: 0.5rem;
 }
 
-/* Footer */
+/* ===== PIED DE PAGE ===== */
 .site-footer {
+    border-top: 2px solid var(--ink);
+    margin-top: 3rem;
+    padding-top: 0.8rem;
     text-align: center;
-    padding: 30px 0;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--border);
-    margin-top: 30px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-ghost);
+    letter-spacing: 0.12em;
 }
 
 .site-footer a {
-    color: var(--primary);
-    text-decoration: none;
+    color: var(--ink-faded);
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
 
-/* Archives page */
+.site-footer a:hover { color: var(--red-ink); }
+
+/* ===== ARCHIVES ===== */
 .archives-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 0.5rem;
+    padding-left: 1.2rem;
 }
 
 .archive-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px 22px;
-    transition: all 0.2s;
+    padding: 0.7rem 0;
+    border-bottom: 1px dashed var(--rule);
+    position: relative;
 }
 
-.archive-card:hover {
-    border-color: var(--primary);
-    background: var(--bg-hover);
+.archive-card::before {
+    content: '\00BB';
+    position: absolute;
+    left: -1.1rem;
+    top: 0.75rem;
+    font-family: 'Courier Prime', monospace;
+    color: var(--ink-ghost);
+    font-size: 0.9rem;
 }
 
 .archive-date {
-    font-size: 0.85rem;
-    color: var(--accent);
-    font-weight: 500;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-ghost);
+    text-transform: uppercase;
 }
 
 .archive-link {
-    color: var(--text);
+    font-family: 'Special Elite', serif;
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    line-height: 1.45;
+    color: var(--ink);
     text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-top: 4px;
     display: block;
+    margin-top: 0.2rem;
 }
 
 .archive-link:hover {
-    color: var(--primary);
+    color: var(--red-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-style: dotted;
 }
 
 .archive-desc {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-top: 4px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-faded);
+    margin-top: 0.2rem;
 }
 
 .empty-archive {
-    text-align: center;
-    color: var(--text-muted);
-    padding: 60px 20px;
+    font-family: 'Courier Prime', monospace;
+    font-style: italic;
+    color: var(--ink-ghost);
+    padding: 2rem 0;
 }
 
-/* Responsive */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 600px) {
-    .site-title { font-size: 1.5rem; }
-    .briefing-content { padding: 20px; }
-    .container { padding: 15px; }
+    .container { padding: 1rem 0.75rem 3rem; }
+    .briefing-content { padding-left: 0.9rem; }
+    .article-card::before { left: -0.9rem; }
+    .archives-list { padding-left: 0.9rem; }
+    .archive-card::before { left: -0.9rem; }
+    .briefing-meta { flex-direction: column; gap: 0.2rem; }
+}
+
+@media (max-width: 400px) {
+    .briefing-content { padding-left: 0.7rem; }
+    .article-card::before { display: none; }
+    .archive-card::before { display: none; }
+}
+
+/* ===== PRINT ===== */
+@media print {
+    body { background: #f5e8d0; }
+    .masthead { font-size: 2rem; }
 }

@@ -40,6 +40,7 @@ Le HTML doit contenir:
 - Un ton chaleureux, optimiste mais professionnel
 - Style: utilise des classes CSS existantes (pas de style inline)
 - Structure propre avec des balises sémantiques
+- Pour l'introduction (sous-titre + intro), utilise class="briefing-header" sur un <div> (pas <header>)
 
 Categories et articles du jour:
 """
@@ -56,10 +57,13 @@ Categories et articles du jour:
     prompt += """
 \nImportant: 
 - Rédige UNIQUEMENT le HTML, pas de markdown ni de code blocks autour
-- Utilise des classes comme .category-title, .article-card, .article-title, .article-summary
+- Utilise des classes comme .category-title, .article-card, .article-title, .article-summary, .en-bref
 - Sois concis mais pertinent
 - Si une section est vide, ne l'inclus pas
-- Ajoute une section "✨ En Bref" à la fin avec les 3 actualités les plus importantes de la journée"""
+- Ajoute une section "En Bref" a la fin avec les 3 actualites les plus importantes de la journee, en utilisant class="en-bref" au lieu de class="category"
+- AUCUN emoji nulle part, ni dans les titres de catégories, ni dans les sections, ni dans les articles
+- Les titres de catégories sont en texte brut (ex: \"Intelligence Artificielle\" et non \"🤖 Intelligence Artificielle\")
+- Le style est sobre et typographique, comme un journal papier"""
 
     return prompt
 

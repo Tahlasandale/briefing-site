@@ -6,9 +6,12 @@ Enchaîne : fetch RSS → résumé IA → build site → déploiement
 
 import json
 import os
+import re
 import subprocess
 import sys
 import time
+import urllib.request
+import urllib.error
 from datetime import datetime
 
 
@@ -29,6 +32,79 @@ def run_script(script_name):
     if result.stderr:
         print(f"⚠️  Stderr: {result.stderr}")
     return result.returncode == 0
+
+
+# ─── Notification Telegram ────────────────────────────────────────────
+
+
+def send_telegram_notification(url: str) -> bool:
+    """Envoie un message Telegram avec l'URL de la gazette du jour."""
+    token = os.environ.get("TELEGRAM_TOKEN")
+    chat_id = os.environ.get("CHAT_ID2")
+
+    # Fallback vers le .env
+    if not token or not chat_id:
+        env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+        if os.path.exists(env_path):
+            with open(env_path) as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith("#"):
+                        k, v = line.split("=", 1)
+                        v = v.strip().strip('"')
+                        if k == "TELEGRAM_TOKEN":
+                            token = v
+                        elif k == "CHAT_ID2":
+                            chat_id = v
+
+    if not token or not chat_id:
+        print("⚠️  TELEGRAM_TOKEN ou CHAT_ID2 manquant — notification ignorée")
+        return False
+
+    today = datetime.now().strftime("%A %d %B %Y")
+    # Nettoyer le token des guillemets résiduels
+    token = token.strip().strip('"\'')
+    chat_id = chat_id.strip().strip('"\'')
+
+    message = (
+        f"📰 *Le Briefing du Matin — {today}*\n\n"
+        f"Votre gazette quotidienne est prête !\n"
+        f"🌐 {url}"
+    )
+
+    payload = {
+        "chat_id": chat_id,
+        "text": message,
+        "parse_mode": "Markdown",
+        "disable_web_page_preview": False,
+    }
+
+    data = json.dumps(payload).encode()
+    req = urllib.request.Request(
+        f"https://api.telegram.org/bot{token}/sendMessage",
+        data=data,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            result = json.loads(resp.read())
+        if result.get("ok"):
+            print(f"✅ Notification Telegram envoyée → {chat_id}")
+            return True
+        else:
+            print(f"⚠️  Erreur Telegram: {result.get('description', 'inconnue')}")
+            return False
+    except urllib.error.HTTPError as e:
+        print(f"⚠️  Erreur HTTP Telegram: {e.code} — {e.read().decode()}")
+        return False
+    except Exception as e:
+        print(f"⚠️  Erreur réseau Telegram: {e}")
+        return False
+
+
+# ─── Pipeline principal ────────────────────────────────────────────────
 
 
 def main():
@@ -129,6 +205,11 @@ def main():
     print(f"\n{'='*60}")
     print(f"  ✅ PIPELINE TERMINÉ en {elapsed:.1f}s")
     print(f"{'='*60}")
+
+    # Envoyer la notification Telegram avec le lien du jour
+    today_slug = datetime.now().strftime("%Y-%m-%d")
+    gazette_url = f"https://tahlasandale.github.io/briefing-site/archives/{today_slug}.html"
+    send_telegram_notification(gazette_url)
     return True
 
 

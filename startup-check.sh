@@ -6,6 +6,7 @@ set -e
 
 cd "$(dirname "$0")"
 PROJECT_DIR="$(pwd)"
+mkdir -p "$PROJECT_DIR/logs"
 TODAY=$(date +%Y-%m-%d)
 DATE_FILE="/tmp/briefing_last_run"
 

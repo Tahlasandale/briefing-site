@@ -12,7 +12,62 @@ import sys
 import time
 import urllib.request
 import urllib.error
-from datetime import datetime
+from datetime import datetime, timezone
+
+# ─── Historique cross-day (évite les répétitions d'articles) ──────────
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+HISTORY_FILE = os.path.join(PROJECT_DIR, "data", "history.json")
+HISTORY_MAX_DAYS = 7  # nettoyage automatique après 7 jours
+
+
+def load_history() -> dict[str, float]:
+    """Charge l'historique des articles déjà publiés.
+    Retourne un dict {url_ou_titre: timestamp_unix}."""
+    if not os.path.exists(HISTORY_FILE):
+        return {}
+    try:
+        with open(HISTORY_FILE) as f:
+            return json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+
+def save_history(history: dict[str, float]) -> None:
+    """Sauvegarde l'historique et nettoie les entrées de plus de HISTORY_MAX_DAYS."""
+    cutoff = time.time() - (HISTORY_MAX_DAYS * 86400)
+    cleaned = {k: v for k, v in history.items() if v >= cutoff}
+    os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
+    with open(HISTORY_FILE, "w") as f:
+        json.dump(cleaned, f, indent=2)
+    purged = len(history) - len(cleaned)
+    if purged:
+        print(f"🧹 {purged} entrées d'historique nettoyées (> {HISTORY_MAX_DAYS} jours)")
+
+
+def filter_history(results_dict: list[dict], history: dict[str, float]) -> tuple[list[dict], int]:
+    """Filtre les articles déjà présents dans l'historique.
+    Retourne (results_dict filtré, nombre d'articles filtrés)."""
+    filtered_total = 0
+    for r in results_dict:
+        before = len(r["items"])
+        r["items"] = [
+            item for item in r["items"]
+            if item.get("link") not in history and item.get("title") not in history
+        ]
+        after = len(r["items"])
+        filtered_total += before - after
+    return results_dict, filtered_total
+
+
+def update_history(results_dict: list[dict], history: dict[str, float]) -> None:
+    """Ajoute les articles du jour à l'historique."""
+    now = time.time()
+    for r in results_dict:
+        for item in r["items"]:
+            key = item.get("link") or item.get("title")
+            if key:
+                history[key] = now
+    save_history(history)
 
 
 def step(msg):
@@ -112,6 +167,10 @@ def main():
     print(f"🚀 Lancement du pipeline — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     print(f"📂 Répertoire: {os.path.dirname(os.path.abspath(__file__))}")
 
+    # Charger l'historique cross-day
+    history = load_history()
+    print(f"📚 Historique chargé: {len(history)} articles déjà publiés")
+
     # Charger la config
     import yaml
     with open("config.yaml") as f:
@@ -142,6 +201,13 @@ def main():
 
     total_items = sum(len(r["items"]) for r in results_dict)
     print(f"✅ {total_items} articles récupérés depuis {len(results_dict)} flux")
+
+    # Filtrer les articles déjà publiés les jours précédents
+    if history:
+        results_dict, filtered_count = filter_history(results_dict, history)
+        if filtered_count > 0:
+            total_items = sum(len(r["items"]) for r in results_dict)
+            print(f"🔄 {filtered_count} article(s) déjà publié(s) retiré(s) — {total_items} restants")
 
     # Vérifier qu'on a des articles
     if total_items == 0:
@@ -205,6 +271,10 @@ def main():
     print(f"\n{'='*60}")
     print(f"  ✅ PIPELINE TERMINÉ en {elapsed:.1f}s")
     print(f"{'='*60}")
+
+    # Mettre à jour l'historique cross-day
+    update_history(results_dict, history)
+    print(f"📚 Historique mis à jour: {len(history)} entrées")
 
     # Envoyer la notification Telegram avec le lien du jour
     today_slug = datetime.now().strftime("%Y-%m-%d")

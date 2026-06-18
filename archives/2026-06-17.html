@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archives — Le Briefing du Matin</title>
+    <meta name="description" content="Votre revue de presse quotidienne, générée par IA">
+    <link rel="icon" href="../favicon.png">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <span class="masthead">Le Briefing du Matin</span>
+            <h1 class="site-title">Le Briefing du Matin</h1>
+            <p class="site-desc">Votre revue de presse quotidienne, générée par IA</p>
+            <nav class="site-nav">
+                <a href="../" class="nav-link">Aujourd'hui</a>
+                <a href="../archives/" class="nav-link">Archives</a>
+            </nav>
+        </header>
+
+        <main class="daily-briefing">
+            <div class="briefing-meta">
+                <time class="briefing-date" datetime="2026-06-17">mercredi 17 juin 2026</time>
+                <span class="article-count">6 articles &bull; 2 flux</span>
+            </div>
+
+            <div class="briefing-content">
+<div class="rss-sources">
+<section class="rss-source">
+<h2>📖 Évangile du jour — 17 juin 2026</h2>
+<p>Aucun nouvel article aujourd'hui (les derniers articles datent du 16 juin).</p>
+</section>
+<section class="briefing-matinal">
+<h2>☀️ Briefing Matinal — mercredi 17 juin 2026</h2>
+
+<div class="priority-box">
+    <strong>🎯 PRIORITÉ ABSOLUE : RATTRAPAGE BDD AUJOURD'HUI</strong><br>
+    <em>Dernier rattrapage de la semaine ! Besoin de 13-14 pour valider.</em>
+</div>
+
+<hr>
+
+<h3>📋 Tâches du jour</h3>
+
+<h4>Routine quotidienne</h4>
+<ul>
+    <li>☐ <strong>Sport</strong> — 120 pompes / 120 squats / 20 gainage militaire</li>
+    <li>☐ <strong>3L d'eau</strong></li>
+</ul>
+
+<h4>🔴 Priorité #1 — Rattrapage BDD</h4>
+<ul>
+    <li>🎯 <strong>Rattrapage BDD (Base de Données) aujourd'hui</strong> — besoin de 13-14</li>
+    <li>📝 Sujet d'entraînement fait hier soir : <em>Bibliothèque municipale</em> (Parties A à E)</li>
+    <li>⚠️ <strong>Pièges à éviter :</strong>
+        <ul>
+            <li>WHERE vs HAVING — HAVING s'utilise avec GROUP BY, pas WHERE</li>
+            <li>SUM vs COUNT — SUM additionne les valeurs, COUNT compte les lignes</li>
+            <li>Noms de colonnes — bien vérifier les alias et les qualifications</li>
+            <li>GROUP BY — toutes les colonnes non agrégées doivent être dans le GROUP BY</li>
+            <li>Jointures — INNER JOIN vs LEFT JOIN, bien comprendre la différence</li>
+            <li>Normalisation — 1FN, 2FN, 3FN : concept + application</li>
+        </ul>
+    </li>
+    <li>📄 Fichier de révision : <code>Notes/Sujet Rattrapage BDD.md</code></li>
+</ul>
+
+<h4>📋 Todo général (extrait de l'index)</h4>
+<ul>
+    <li>☐ S'inscrire aux licences backup pour l'année prochaine</li>
+    <li>☐ Longue piste</li>
+    <li>☐ Finir la <strong>Grande Chasse</strong> — valider les contenus et les intégrer au document</li>
+    <li>☐ Finir la <strong>Veillée des chefs, Louveteaux 2026</strong></li>
+    <li>☐ Tronçonneuse</li>
+    <li>☐ <strong>Prépa semaine Vendée</strong> + <strong>Anniversaire Galliane 🎂 (JEUDI = DEMAIN)</strong></li>
+    <li>☐ Lancer une grande machine</li>
+    <li>☐ Ranger la chambre</li>
+    <li>☐ Paiement 200 balles route d'été</li>
+</ul>
+
+<h4>⚠️ Urgent — Jeudi 18 juin (DEMAIN)</h4>
+<ul>
+    <li>🎂 <strong>Anniversaire de GALLIANE</strong> — prévoir cadeau et organisation</li>
+    <li>⛺ <strong>Remboursements des tentes</strong> pour les parents</li>
+    <li>🔧 <strong>Réparation des tentes</strong> pour madame de Lacotte</li>
+</ul>
+
+<hr>
+
+<h3>🔄 Activités de la veille — Mardi 16 juin 2026</h3>
+
+<h4>📱 Sessions Hermes</h4>
+<ul>
+    <li>
+        <strong>21h49-22h43 — Sujet BDD « Bibliothèque municipale »</strong> 
+        <ul>
+            <li>Création complète d'un sujet d'entraînement en 5 parties (A à E)</li>
+            <li>Partie A : Questions de cours (définitions SQL, DDL, DML, clés primaires/étrangères)</li>
+            <li>Partie B : DDL — Création des tables (Auteur, Livre, Adherent, Emprunt) avec contraintes</li>
+            <li>Partie C : Requêtes SQL — 10 questions de sélection, jointures, agrégation</li>
+            <li>Partie D : Vrai/Faux — 10 affirmations avec justifications</li>
+            <li>Partie E : Normalisation — Dépendances fonctionnelles, 1FN/2FN/3FN</li>
+            <li>Exercice fait à la main (photo) → transcrit + corrigé inline dans le fichier</li>
+            <li>7 pièges classiques identifiés et corrigés dans le sujet</li>
+        </ul>
+    </li>
+    <li>
+        <strong>22h44-22h50 — Debug cron daily-recap</strong>
+        <ul>
+            <li>HTTP 429 Rate limit sur DeepSeek Free (modèle par défaut)</li>
+            <li>Fix : modèle pinné sur <code>deepseek-v4-flash</code> / provider <code>deepseek</code> (payant)</li>
+            <li>Template enrichi : ajout de la section emails + recherche multi-thèmes</li>
+            <li>Validation : run manuel à 22h51 sans erreur ✅</li>
+        </ul>
+    </li>
+    <li><strong>Cron briefing-matinal</strong> — Exécuté à 09h01 ✅</li>
+    <li><strong>Cron daily-recap-19h05</strong> — Exécuté à 22h51 après debug ✅</li>
+</ul>
+
+<h4>💻 Commits & Code</h4>
+<ul>
+    <li><strong>Aucun commit</strong> sur aucun dépôt — journée d'examens</li>
+    <li><strong>briefing-site</strong> : Pipeline opérationnel, chemins config.yaml corrigés</li>
+    <li><strong>Hermes WebUI</strong> : Rien de neuf (merge button terminé lundi)</li>
+    <li><strong>Groupe Saint-Martin</strong> : Pas de commits</li>
+    <li><strong>Urof / Comptoir du Bison</strong> : Inactifs</li>
+</ul>
+
+<h4>📬 Emails reçus le 16 juin 2026</h4>
+
+<h5>Réponses aux candidatures universitaires (5 reçues)</h5>
+<ul>
+    <li>📩 <strong>scolarite.sciences</strong> (08:02) — RE: Candidature intégration L2/L3 Informatique</li>
+    <li>📩 <strong>Paris Nanterre</strong> (08:16) — Re: [inscriptions] Candidature L2/L3 Informatique</li>
+    <li>📩 <strong>Inscriptions Administratives</strong> (08:24) — Fwd: Candidature L2/L3 Informatique</li>
+    <li>📩 <strong>Jeremie Marchal</strong> (08:34) — Fwd: [deve-spse1] Candidature L2/L3 Informatique</li>
+    <li>📩 <strong>CNAM</strong> (09:07) — Prise en compte demande [Ref: 26-167-044424]</li>
+</ul>
+<p>→ <strong>5 réponses en une matinée</strong> — très bonne dynamique ! Plus la réponse de Contact Scolarite reçue lundi 21h55. Total : <strong>6 réponses en 2 jours.</strong></p>
+
+<h5>Autres mails importants</h5>
+<ul>
+    <li>📝 <strong>Arnaud Durand (via eCampus)</strong> (15:05) — Recommandations pour le Rattrapage de Maths (prof qui envoie des conseils spécifiques — utile même si l'épreuve est passée)</li>
+    <li>📕 <strong>Guillaume Dupuis</strong> (09:31) — [ESH] anticipation de la rentrée 2026/2027 : établissement des PAEH <em>(NON LU — à lire)</em></li>
+    <li>📊 <strong>Serge Carrez</strong> (16:23) — Enquête enseignements S2 : plus qu'un jour pour répondre ! <em>(NON LU — urgent, date limite passée)</em></li>
+    <li>🏟️ <strong>Proton</strong> (19:15) — Offres Match Coupe du monde (spam / pub)</li>
+</ul>
+
+<h5>Mails plus anciens non lus (avant le 16 juin)</h5>
+<ul>
+    <li>💼 <strong>Twine Team</strong> (14/06) — 1 new job opportunity posted</li>
+    <li>💼 <strong>Twine Team</strong> (12/06) — 1 new job opportunity posted</li>
+    <li>💨 <strong>Vaping Post</strong> (14/06) — La vape entre innovation, soupçons et mauvaises décisions</li>
+    <li>🏛️ <strong>Région Île-de-France</strong> (12/06) — La Région, soutien de l'innovation, sera à VivaTech</li>
+    <li>🏦 <strong>Banque Populaire</strong> (12/06) — Réception d'un virement instantané de 4.00€</li>
+    <li>🏥 <strong>Ameli</strong> (12/06) — Gère ta santé en ligne</li>
+    <li>🏫 <strong>Hugues Loizeleur</strong> (12/06) — Modification horaire fermeture école (bât 620)</li>
+    <li>📋 <strong>Marie-Christine Henriot</strong> (12/06) — SNEE - Pépite PEIPS 2026-2027</li>
+    <li>📧 <strong>enquetes.polytech</strong> (15/06) — Relance Enquête Evaluation S4</li>
+    <li>👨‍👩‍👧‍👧 <strong>Famileo</strong> (15/06) — Une nouvelle gazette est disponible</li>
+</ul>
+
+<hr>
+
+<h3>💬 Feedback de la veille — Mardi 16 juin</h3>
+<ul>
+    <li>📝 <strong>Pas de feedback écrit</strong> pour le 16 juin (fichier <code>feedbacks/2026-06-16.md</code> inexistant).</li>
+    <li><strong>Inféré des activités :</strong>
+        <ul>
+            <li>✅ <strong>Rattrapage de Maths le matin</strong> — l'épreuve est passée. Résultat inconnu mais tout était prêt (checklist 100+ notions, 2 annales corrigées)</li>
+            <li>✅ <strong>Révisions BDD le soir</strong> — sujet d'entraînement complet créé et corrigé</li>
+            <li>✅ <strong>Debug cron technique</strong> — rate limit résolu, modèle pinné</li>
+        </ul>
+    </li>
+    <li><strong>Dernier feedback connu (dimanche 14 juin) :</strong> Productif, méthode Pomodoro 50/10, sport arrêté (reprise), musique en préparation, BBQ vendredi, weekend scooter.</li>
+</ul>
+
+<hr>
+
+<h3>📌 Projets en attente</h3>
+<ul>
+    <li>
+        <strong>📚 Groupe Saint-Martin</strong> ⏸️ — En retard
+        <ul>
+            <li>Grande Chasse : validation des contenus non faite</li>
+            <li>Veillée des chefs Louveteaux 2026 : pas commencée</li>
+            <li>Tentes : remboursements parents + réparation madame de Lacotte à faire POUR DEMAIN</li>
+        </ul>
+    </li>
+    <li><strong>🖥️ Hermes WebUI</strong> ✅ — Merge & Update button livré et testé lundi. Rien de bloquant.</li>
+    <li><strong>🌐 Briefing-site</strong> 🟢 — Pipeline RSS opérationnel. 2 flux (Évangile + Korben). Aucun nouvel article aujourd'hui.</li>
+    <li><strong>🔄 Urof</strong> ⏸️ — Overlay redesign en pause.</li>
+    <li><strong>🦬 Le Comptoir du Bison</strong> ⏸️ — Pas d'activité depuis plusieurs jours.</li>
+    <li><strong>🖧 Serveur</strong> ⏸️ — Toujours pas rallumé (dans la todo).</li>
+</ul>
+
+<hr>
+
+<h3>📅 Alternance & Prospection</h3>
+<ul>
+    <li><strong>🏢 MyUnisoft / École Futée</strong> ✅ — Contrat signé. Stack PHP/Symfony/React, 3 ans en alternance, Rambouillet. Rentrée septembre 2026.</li>
+    <li><strong>📋 Candidatures backup universitaires</strong> 📈 — Très bonne dynamique
+        <ul>
+            <li>12 emails envoyés lundi aux universités (UVSQ, Paris-Saclay, CNAM, Nanterre…)</li>
+            <li><strong>6 réponses reçues en 2 jours</strong> (1 lundi soir + 5 mardi matin)</li>
+            <li>Universités qui répondent : CNAM, Paris Nanterre, scolarite.sciences, Jeremie Marchal</li>
+            <li>À suivre après les rattrapages</li>
+        </ul>
+    </li>
+    <li><strong>💼 Stern.tech</strong> ⏸️ — Contact chaud de Christophe Stern le 12 juin. Relance prévue après les rattrapages.</li>
+    <li><strong>🚫 Prospection</strong> ⏸️ — En pause (crons pipeline-prospection et prospection-quotidienne désactivés).</li>
+    <li><strong>📊 Enquête enseignements S2</strong> ⚠️ — Serge Carrez a envoyé un rappel : date limite dépassée (NON LU).</li>
+    <li><strong>📕 ESH anticipation rentrée</strong> ⏸️ — Mail de Guillaume Dupuis NON LU (étab. PAEH 2026/2027).</li>
+    <li><strong>👨‍💼 SNEE Pépite PEIPS 2026-2027</strong> ⏸️ — Mail de Marie-Christine Henriot du 12 juin, NON LU.</li>
+</ul>
+
+<hr>
+
+<h3>📅 Rappels & Agenda</h3>
+<ul>
+    <li>🔥 <strong>AUJOURD'HUI Mercredi 17 juin</strong> — <strong>Rattrapage BDD (Info)</strong> 💪 besoin de 13-14. Sujet d'entraînement fait. Révise les jointures et la normalisation.</li>
+    <li>🎂 <strong>DEMAIN Jeudi 18 juin</strong> — <strong>Anniversaire de GALLIANE</strong> — cadeau + organisation à prévoir AUJOURD'HUI</li>
+    <li>⛺ <strong>DEMAIN Jeudi 18 juin</strong> — Remboursements tentes parents + réparation tentes madame de Lacotte</li>
+    <li>🏕️ <strong>Semaine Vendée</strong> — Préparation à commencer (la date approche)</li>
+    <li>🏢 <strong>Alternance MyUnisoft</strong> — Contrat signé, rentrée septembre 2026</li>
+    <li>🚀 <strong>Réponses candidatures backup</strong> — 6 réponses reçues, à traiter après les exams</li>
+    <li>🏕️ <strong>Camp louveteaux</strong> — Grande Chasse + Veillée des chefs à préparer</li>
+</ul>
+
+<hr>
+
+<div class="quote-box">
+    <em>« Le dernier effort. T'as préparé le sujet hier soir, les pièges sont identifiés, les corrections sont faites. Exécute ce que t'as préparé. Après ça, tu gères Galliane et les tentes. »</em>
+</div>
+
+</section>
+
+<section class="rss-source">
+<h2>💻 Korben.info</h2>
+<p>Aucun nouvel article aujourd'hui (les derniers articles datent du 16 juin).</p>
+</section>
+</div>
+
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <p>Genere automatiquement le 2026-06-17 09:02 &bull; Briefing Quotidien</p>
+            <p><a href="../archives/">Consulter les archives</a></p>
+        </footer>
+    </div>
+</body>
+</html>

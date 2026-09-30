@@ -16,6 +16,11 @@ git add -A
 git commit -m "Briefing du $(date +%Y-%m-%d)" --allow-empty || echo "Pas de changement à committer"
 
 echo "☁️ Push sur gh-pages..."
-git push origin gh-pages || git push -f origin gh-pages || echo "Push échoué — vérifiez l'authentification gh"
+TOKEN=$(HOME=/root gh auth token 2>/dev/null || echo "")
+if [ -z "$TOKEN" ]; then
+    echo "❌ Token gh non récupéré - impossible de push"
+    exit 1
+fi
+git push https://x-access-token:${TOKEN}@github.com/Tahlasandale/briefing-site.git gh-pages || git push -f origin gh-pages || echo "Push échoué — vérifiez l'authentification gh"
 
 echo "✅ Déployé sur https://tahlasandale.github.io/briefing-site/"

@@ -21,6 +21,6 @@ if [ -z "$TOKEN" ]; then
     echo "❌ Token gh non récupéré - impossible de push"
     exit 1
 fi
-git push https://x-access-token:${TOKEN}@github.com/Tahlasandale/briefing-site.git gh-pages || git push -f origin gh-pages || echo "Push échoué — vérifiez l'authentification gh"
+git push -f https://x-access-token:${TOKEN}@github.com/Tahlasandale/briefing-site.git gh-pages || git push -f origin gh-pages || echo "Push échoué — vérifiez l'authentification gh"
 
 echo "✅ Déployé sur https://tahlasandale.github.io/briefing-site/"
